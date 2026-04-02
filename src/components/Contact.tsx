@@ -49,7 +49,6 @@ export default function Contact() {
 
                 <div className="flex flex-col lg:flex-row gap-20 items-stretch">
 
-                    {/* Left side: Info */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-center">
                         <div className="mt-16 flex flex-col space-y-12">
                             <div className="contact-reveal">
@@ -74,7 +73,6 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    {/* Right side: Form */}
                     <div className="w-full lg:w-1/2">
                         <form
                             ref={formRef}

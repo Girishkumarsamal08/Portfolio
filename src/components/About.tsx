@@ -32,7 +32,7 @@ export default function About() {
                     viewport={{ once: true }}
                     className="mb-32 text-center"
                 >
-                    <h2 className="text-5xl md:text-7xl text-white font-serif mb-8 uppercase tracking-widest relative z-10">
+                    <h2 className="text-5xl md:text-7xl text-white font-serif mb-0 uppercase tracking-widest relative z-10">
                         About Me
                     </h2>
                 </motion.div>
@@ -66,11 +66,8 @@ export default function About() {
                         </div>
                     </div>
 
-                    {/* Right Side: Flat minimalist Code Snippet box */}
                     <div ref={rightRef} className="w-full lg:w-1/2 flex justify-center lg:justify-end relative z-10">
-                        <div
-                            className="w-full max-w-lg bg-[#0a0a0a] border border-[#333333] rounded-none overflow-hidden hover:border-[#555555] transition-colors duration-500"
-                        >
+                        <div className="w-full max-w-lg bg-[#0a0a0a] border border-[#333333] rounded-none overflow-hidden hover:border-[#555555] transition-colors duration-500">
                             <div className="flex items-center gap-4 bg-[#111111] px-6 py-4 border-b border-[#333333]">
                                 <span className="text-xs text-[#999999] font-mono uppercase tracking-widest">developer.ts</span>
                             </div>
