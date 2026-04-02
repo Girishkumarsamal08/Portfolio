@@ -57,12 +57,6 @@ export default function Hero() {
             stagger: 0.2,
             duration: 1
         }, "-=1")
-        .from(imageRef.current, {
-            opacity: 0,
-            scale: 0.8,
-            duration: 1.5,
-            ease: "expo.out"
-        }, "-=1")
     }, { scope: containerRef })
 
     return (

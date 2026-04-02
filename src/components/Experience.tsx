@@ -54,13 +54,13 @@ export default function Experience() {
             transition={{ duration: 0.6, delay: i * 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="group relative p-10 md:p-14 border border-white/5 bg-white/5 backdrop-blur-2xl hover:border-white/20 transition-all duration-700 rounded-2xl hover:shadow-2xl">
+            <div className="group relative p-10 md:p-14 border border-white/5 bg-white/5 backdrop-blur-2xl hover:border-white/20 transition-all duration-700 rounded-2xl">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
                 <div>
                   <h3 className="text-3xl md:text-4xl text-white font-serif mb-2 tracking-tight">
                     {exp.role}
                   </h3>
-                  <p className="text-blue-500 font-sans tracking-[0.3em] text-xs uppercase font-bold">
+                  <p className="font-sans tracking-[0.3em] text-xs uppercase font-bold text-blue-500">
                     {exp.project}
                   </p>
                 </div>
