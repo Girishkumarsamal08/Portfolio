@@ -4,84 +4,94 @@ import { motion } from "framer-motion"
 
 const experiences = [
   {
-    role: "Independent AI Researcher & Architect",
-    project: "Phase 3: Advanced Intelligence Systems",
-    duration: "2025 — Present",
+    role: "Full-Stack Web Developer",
+    project: "Phase 3: Building Scale",
+    duration: "2025 — PRESENT",
     type: "solo",
-    description: "A deep immersion into real-world AI applications, focusing on the intersection of voice intelligence, RAG-based support engines, and modular software architecture.",
-    points: [
-      "Mastered Speech Recognition & TTS optimization",
-      "Designed agentic RAG workflows for customer support",
-      "Focused on high-performance Python/Node architectures"
-    ]
+    details: [
+      "Architecting high-performance web systems using Next.js, React, and TypeScript.",
+      "Optimizing database interactions and API response times for seamless user experiences.",
+      "Implementing advanced animations and interactive components to elevate digital presence."
+    ],
+    link: "#"
   },
   {
-    role: "Full-Stack System Designer",
-    project: "Phase 2: Scalable Engineering & Group Collab",
+    role: "AI Web Developer",
+    project: "Phase 2: Intelligent Systems",
     duration: "2024 — 2025",
     type: "solo",
-    description: "Transitioned from basic applications to complex, multi-platform systems. Led the architecture design for data-heavy platforms and integrated real-time services.",
-    points: [
-      "Implemented advanced web scraping & data analysis",
-      "Designed mock test engines for 1,000+ simulated users",
-      "Built resilient backends with FastAPI & MongoDB/AWS"
-    ]
+    details: [
+      "Developed custom AI agents and automation workflows to streamline business processes.",
+      "Integrated machine learning models into web interfaces for real-time data processing.",
+      "Built responsive, data-driven dashboards using modern frontend and backend tech stacks."
+    ],
+    link: "#"
   },
   {
     role: "Aspiring Web Developer",
     project: "Phase 1: Engineering Foundations",
     duration: "2023 — 2024",
     type: "solo",
-    description: "The foundational stage of my technical journey, focusing on core programming language mastery, algorithm design, and building the logic for early-stage digital products.",
-    points: [
-      "Mastered Python, Java, and early Web Dev",
-      "Focused on problem-solving & clean code builds",
-      "Initial exploration into automation & scripting"
-    ]
+    details: [
+      "Mastered core web technologies: HTML5, CSS3, JavaScript, and Python.",
+      "Collaborated on small-scale projects to understand the software development lifecycle.",
+      "Focused on clean code principles and responsive design fundamentals."
+    ],
+    link: "#"
   }
 ]
 
 export default function Experience() {
   const Section = ({ title, data }: any) => (
-    <div className="space-y-16 mt-20">
-      <h3 className="text-2xl font-serif text-white/40 uppercase tracking-[0.4em] mb-12 border-b border-white/5 pb-4">{title}</h3>
+    <div className="mb-24">
+      <h3 className="text-2xl font-serif text-white/40 uppercase tracking-[0.4em] mb-12 border-b border-white/5 pb-4"> {title} </h3>
       <div className="space-y-16">
         {data.map((exp: any, i: number) => (
           <motion.div
-            key={i}
+            key={exp.project}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: i * 0.2 }}
             viewport={{ once: true }}
-            className="group relative p-8 md:p-12 border border-white/5 bg-white/5 backdrop-blur-xl transition-all duration-700"
           >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
-              <div>
-                <h4 className="text-3xl font-serif text-white mb-3 transition-colors duration-500 font-bold">
-                  {exp.role}
-                </h4>
-                <p className="text-[#666] text-xs font-semibold uppercase tracking-[0.3em]">
-                  {exp.project}
-                </p>
-              </div>
-              <span className="text-[10px] px-4 py-2 border border-white/10 text-[#888] uppercase tracking-[0.2em] font-bold bg-white/[0.02]">
-                {exp.duration}
-              </span>
-            </div>
-
-            <p className="text-[#aaa] mb-10 leading-[1.8] font-light text-lg max-w-4xl italic border-l border-white/10 pl-8">
-              &ldquo;{exp.description}&rdquo;
-            </p>
-
-            <div className="flex flex-wrap gap-x-10 gap-y-4 pt-10 border-t border-white/5">
-              {exp.points.map((point: any, j: number) => (
-                <div key={j} className="flex items-center gap-4">
-                  <span className="w-1.5 h-1.5 bg-white/10 rounded-full group-hover:bg-blue-400 transition-all duration-500"></span>
-                  <span className="text-[11px] text-[#555] uppercase tracking-[0.2em] group-hover:text-[#999] transition-colors duration-500">
-                    {point}
-                  </span>
+            <div className="group relative p-10 md:p-14 border border-white/5 bg-white/5 backdrop-blur-2xl hover:border-white/20 transition-all duration-700 rounded-2xl hover:shadow-2xl">
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+                <div>
+                  <h3 className="text-3xl md:text-4xl text-white font-serif mb-2 tracking-tight">
+                    {exp.role}
+                  </h3>
+                  <p className="text-blue-500 font-sans tracking-[0.3em] text-xs uppercase font-bold">
+                    {exp.project}
+                  </p>
                 </div>
-              ))}
+                <div className="text-white/30 font-sans text-sm tracking-widest uppercase font-medium">
+                  {exp.duration}
+                </div>
+              </div>
+
+              <div className="space-y-6 mb-12">
+                {exp.details.map((detail: string, idx: number) => (
+                  <div key={idx} className="flex items-start gap-4 group/item">
+                    <div className="w-1.5 h-1.5 rounded-full bg-white/20 mt-2.5 transition-all duration-500 group-hover/item:bg-blue-400" />
+                    <p className="text-[#999999] text-lg font-light leading-relaxed group-hover/item:text-white transition-colors">
+                      {detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex justify-between items-center border-t border-white/5 pt-10">
+                <span className="text-[10px] text-white/20 uppercase tracking-[0.4em] font-bold">
+                  {exp.type}
+                </span>
+                <a 
+                  href={exp.link}
+                  className="group/btn flex items-center gap-4 text-white text-xs uppercase tracking-[0.3em] font-bold hover:text-blue-400 transition-all duration-300"
+                >
+                  View Project
+                  <span className="w-8 h-[1px] bg-white/20 transition-all duration-300 group-hover:bg-blue-400 group-hover:w-12" />
+                </a>
+              </div>
             </div>
           </motion.div>
         ))}

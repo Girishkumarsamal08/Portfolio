@@ -49,6 +49,7 @@ export default function Contact() {
 
                 <div className="flex flex-col lg:flex-row gap-20 items-stretch">
 
+                    {/* Left side: Info */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-center">
                         <div className="mt-16 flex flex-col space-y-12">
                             <div className="contact-reveal">
@@ -56,6 +57,13 @@ export default function Contact() {
                                 <a href="mailto:biswajitasamal8342@gmail.com" className="text-[#cccccc] hover:text-white transition-colors text-lg font-serif">
                                     biswajitasamal8342@gmail.com
                                 </a>
+                            </div>
+
+                            <div className="contact-reveal">
+                                <h3 className="text-white text-xl font-serif font-bold mb-4 tracking-wide">Address:</h3>
+                                <p className="text-[#cccccc] text-lg font-serif">
+                                    Bhubaneswar, Odisha, India
+                                </p>
                             </div>
 
                             <div className="contact-reveal flex items-center gap-6 mt-10">
@@ -66,6 +74,7 @@ export default function Contact() {
                         </div>
                     </div>
 
+                    {/* Right side: Form */}
                     <div className="w-full lg:w-1/2">
                         <form
                             ref={formRef}

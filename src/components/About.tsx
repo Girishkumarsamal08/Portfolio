@@ -66,11 +66,15 @@ export default function About() {
                         </div>
                     </div>
 
+                    {/* Right Side: Flat minimalist Code Snippet box */}
                     <div ref={rightRef} className="w-full lg:w-1/2 flex justify-center lg:justify-end relative z-10">
-                        <div className="w-full max-w-lg bg-[#0a0a0a] border border-[#333333] rounded-none overflow-hidden">
+                        <div
+                            className="w-full max-w-lg bg-[#0a0a0a] border border-[#333333] rounded-none overflow-hidden hover:border-[#555555] transition-colors duration-500"
+                        >
                             <div className="flex items-center gap-4 bg-[#111111] px-6 py-4 border-b border-[#333333]">
                                 <span className="text-xs text-[#999999] font-mono uppercase tracking-widest">developer.ts</span>
                             </div>
+
                             <div className="p-8 font-mono text-sm leading-loose text-[#cccccc] overflow-x-auto">
                                 <span className="text-white font-semibold">const</span> developer = {'{'} <br />
                                 <span className="pl-6"><span className="text-[#999999]">name</span>: <span className="text-white">'Girish Kumar Samal'</span>,</span> <br />
