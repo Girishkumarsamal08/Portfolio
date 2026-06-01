@@ -8,6 +8,8 @@ const skills = [
     { name: "Bootstrap Framework", icon: "/skills/bootstrap.png" },
     { name: "Python Language", icon: "/skills/python.jpeg" },
     { name: "REST API Integration", icon: "api", isLetter: true },
+    { name: "Java Language", icon: "JA", isLetter: true },
+    { name: "C++ Language", icon: "C+", isLetter: true },
     { name: "TypeScript Language", icon: "TS", isLetter: true },
     { name: "Tailwind CSS Framework", icon: "tailwind", isLetter: true },
     { name: "Next JS Framework", icon: "/skills/nextjs.png" },
@@ -16,8 +18,33 @@ const skills = [
     { name: "CSS Language", icon: "/skills/css.png" },
     { name: "Javascript Language", icon: "/skills/js.png" },
     { name: "React JS Framework", icon: "/skills/reactjs.png" },
+    { name: "Next JS Framework", icon: "/skills/nextjs.png" },
     { name: "Node JS Runtime", icon: "/skills/nodejs.png" },
+    { name: "FastAPI Framework", icon: "FA", isLetter: true },
+    { name: "Tailwind CSS Framework", icon: "TW", isLetter: true },
+    { name: "Bootstrap Framework", icon: "/skills/bootstrap.png" },
+    { name: "REST API Integration", icon: "AP", isLetter: true },
+    { name: "MySql Database", icon: "/skills/mysql.png" },
+    { name: "MongoDB Database", icon: "MG", isLetter: true },
+    { name: "AWS Cloud", icon: "AWS", isLetter: true },
+    { name: "Docker Containerization", icon: "/skills/docker.png" },
     { name: "Github Repository", icon: "/skills/github.png" },
+    { name: "HTML Language", icon: "/skills/html.png" },
+    { name: "CSS Language", icon: "/skills/css.png" },
+    { name: "Vite Framework", icon: "VI", isLetter: true },
+]
+
+// Diamond rows: 2-3-4-5-5-4-3-2-1 = 29
+const rows = [
+    { start: 0, count: 2 },
+    { start: 2, count: 3 },
+    { start: 5, count: 4 },
+    { start: 9, count: 5 },
+    { start: 14, count: 5 },
+    { start: 19, count: 4 },
+    { start: 23, count: 3 },
+    { start: 26, count: 2 },
+    { start: 28, count: 1 },
 ]
 
 export default function Skills() {
@@ -31,50 +58,15 @@ export default function Skills() {
                     <div className="w-24 h-[1px] bg-[#333333]"></div>
                 </div>
 
-                {/* Pyramid Layout restored */}
+                {/* Diamond Pyramid Layout */}
                 <div className="flex flex-col items-start md:items-center gap-4 w-full">
-
-                    {/* Top Row: 2 items */}
-                    <div className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
-                        {skills.slice(0, 2).map((skill, idx) => (
-                            <SkillCard key={idx} skill={skill} idx={idx} />
-                        ))}
-                    </div>
-
-                    {/* Second Row: 3 items */}
-                    <div className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
-                        {skills.slice(2, 5).map((skill, idx) => (
-                            <SkillCard key={idx + 2} skill={skill} idx={idx + 2} />
-                        ))}
-                    </div>
-
-                    {/* Third Row: 4 items */}
-                    <div className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
-                        {skills.slice(5, 9).map((skill, idx) => (
-                            <SkillCard key={idx + 5} skill={skill} idx={idx + 5} />
-                        ))}
-                    </div>
-
-                    {/* Fourth Row: 3 items */}
-                    <div className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
-                        {skills.slice(9, 12).map((skill, idx) => (
-                            <SkillCard key={idx + 9} skill={skill} idx={idx + 9} />
-                        ))}
-                    </div>
-
-                    {/* Fifth Row: 2 items */}
-                    <div className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
-                        {skills.slice(12, 14).map((skill, idx) => (
-                            <SkillCard key={idx + 12} skill={skill} idx={idx + 12} />
-                        ))}
-                    </div>
-
-                    {/* Bottom Row: 1 item */}
-                    <div className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
-                        {skills.slice(14, 15).map((skill, idx) => (
-                            <SkillCard key={idx + 14} skill={skill} idx={idx + 14} />
-                        ))}
-                    </div>
+                    {rows.map((row, rowIdx) => (
+                        <div key={rowIdx} className="flex flex-wrap md:flex-nowrap justify-start md:justify-center gap-4 w-full">
+                            {skills.slice(row.start, row.start + row.count).map((skill, idx) => (
+                                <SkillCard key={row.start + idx} skill={skill} idx={row.start + idx} />
+                            ))}
+                        </div>
+                    ))}
                 </div>
 
             </div>
