@@ -185,7 +185,12 @@ export default function Projects() {
                                     >
                                         Live Preview
                                     </a>
-                                    <a href={selectedProject.github} className="px-8 py-4 border border-[#333] text-white text-xs uppercase tracking-[0.2em] font-bold hover:bg-white/5 transition-colors">
+                                    <a 
+                                        href={selectedProject.github} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="px-8 py-4 border border-[#333] text-white text-xs uppercase tracking-[0.2em] font-bold hover:bg-white/5 transition-colors"
+                                    >
                                         Source Code
                                     </a>
                                 </div>
