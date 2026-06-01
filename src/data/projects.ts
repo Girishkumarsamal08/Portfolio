@@ -16,11 +16,11 @@ export const projects: Project[] = [
         link: "#",
     },
     {
-        title: "SmartBuy Price Comparator",
+        title: "Aesthetic Developer Portfolio",
         description:
-            "Full-stack web application that compares product prices across multiple e-commerce platforms in real-time.",
-        tech: ["React", "Flask", "MongoDB", "AWS", "Web Scraping"],
-        gradient: "linear-gradient(135deg, #06b6d4, #10b981)",
+            "A premium, high-performance portfolio website built with Next.js, featuring glassmorphism and advanced animations.",
+        tech: ["Next.js", "GSAP", "Framer Motion", "Tailwind"],
+        gradient: "linear-gradient(135deg, #ec4899, #8b5cf6)",
         link: "#",
     },
 ]

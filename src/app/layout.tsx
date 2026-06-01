@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" })
 
 export const metadata = {
-  title: "Girish Kumar Samal | Web & AI Developer",
-  description: "Portfolio of Girish Kumar Samal — Web & AI Developer, building intelligent web systems, automation tools, and scalable digital solutions.",
+  title: "Girish's Portfolio",
+  description: "Portfolio of Girish Kumar Samal — AI Developer, building intelligent systems, automation tools, and scalable web applications.",
 }
 
 export default function RootLayout({

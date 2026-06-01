@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-        <footer className="border-t border-white/10 py-8 text-center ">
+        <footer className="py-12 text-center bg-transparent relative z-10">
             <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p className="text-gray-500 text-sm">
                     © 2026 Girish Kumar Samal. All rights reserved.

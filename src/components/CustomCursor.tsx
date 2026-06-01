@@ -7,7 +7,7 @@ export default function CustomCursor() {
     const [isVisible, setIsVisible] = useState(false)
     const [isPointer, setIsPointer] = useState(false)
     const [coords, setCoords] = useState({ x: 0, y: 0 })
-    
+
     const cursorRef = useRef<HTMLDivElement>(null)
     const tooltipRef = useRef<HTMLDivElement>(null)
 
@@ -17,7 +17,7 @@ export default function CustomCursor() {
         // GSAP QuickTo for ultra-responsive movement
         const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.4, ease: "power3" })
         const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.4, ease: "power3" })
-        
+
         const txTo = gsap.quickTo(tooltipRef.current, "x", { duration: 0.6, ease: "power2" })
         const tyTo = gsap.quickTo(tooltipRef.current, "y", { duration: 0.6, ease: "power2" })
 
@@ -27,18 +27,18 @@ export default function CustomCursor() {
             yTo(clientY)
             txTo(clientX + 16)
             tyTo(clientY + 16)
-            
+
             setCoords({ x: clientX, y: clientY })
-            
+
             if (!isVisible) setIsVisible(true)
 
             // Check if hovered element is clickable
             const target = e.target as HTMLElement
-            const isClickable = 
+            const isClickable =
                 window.getComputedStyle(target).cursor === "pointer" ||
                 target.tagName.toLowerCase() === "a" ||
                 target.tagName.toLowerCase() === "button"
-            
+
             setIsPointer(isClickable)
         }
 

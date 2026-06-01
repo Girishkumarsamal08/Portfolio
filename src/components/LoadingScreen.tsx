@@ -1,117 +1,170 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { gsap } from "@/lib/gsap"
+import { useGSAP } from "@gsap/react"
 
 interface LoadingScreenProps {
     onComplete: () => void;
 }
 
-const BOOT_LOGS = [
-    "[ OK ] Mounting network assets to /dev/sda1",
-    "[ OK ] Established secure SSH tunnel (port 22)",
-    "[ OK ] Loading encrypted docker context...",
-    "[ OK ] System kernel initialized (v6.0.8)",
-    "[ OK ] User authentication verified",
-    "[ OK ] Boot sequence complete."
-]
+// Fixed number of stars for performance and consistency
+const STAR_COUNT = 120
+
+function generateStars() {
+    return Array.from({ length: STAR_COUNT }).map(() => ({
+        x: (Math.random() - 0.5) * 250,
+        y: (Math.random() - 0.5) * 250,
+        size: Math.random() * 1.5 + 0.5,
+        isMeteor: Math.random() > 0.85
+    }))
+}
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const [progress, setProgress] = useState(0)
-    const [logs, setLogs] = useState<string[]>([])
     const [isComplete, setIsComplete] = useState(false)
+    const [mounted, setMounted] = useState(false)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const starsRef = useRef<(SVGSVGElement | null)[]>([])
+
+    // Generate star positions only on the client to avoid hydration mismatch
+    const starInitialPositions = useRef<ReturnType<typeof generateStars>>([])
 
     useEffect(() => {
-        // Increment progress simulation
-        const progressInterval = setInterval(() => {
-            setProgress(prev => {
-                if (prev >= 100) {
-                    clearInterval(progressInterval)
-                    return 100
-                }
-                const increment = Math.floor(Math.random() * 15) + 5
-                return Math.min(prev + increment, 100)
-            })
-        }, 150)
-
-        // Add logs simulation
-        const addLogs = async () => {
-            for (let i = 0; i < BOOT_LOGS.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 400))
-                setLogs(prev => [...prev, BOOT_LOGS[i]])
-            }
-        }
-
-        addLogs()
-
-        return () => clearInterval(progressInterval)
+        starInitialPositions.current = generateStars()
+        setMounted(true)
     }, [])
 
-    useEffect(() => {
-        if (progress === 100 && logs.length === BOOT_LOGS.length) {
-            setTimeout(() => {
+    useGSAP(() => {
+        if (!containerRef.current || !mounted) return
+
+        const TOTAL_DURATION = 15
+
+        const tl = gsap.timeline({
+            onComplete: () => {
                 setIsComplete(true)
-                setTimeout(() => {
-                    onComplete()
-                }, 800) // matches fade out duration
-            }, 600)
-        }
-    }, [progress, logs, onComplete])
+                setTimeout(onComplete, 500)
+            }
+        })
+
+        // Animate progress value
+        tl.to({ val: 0 }, {
+            val: 100,
+            duration: TOTAL_DURATION,
+            ease: "none",
+            onUpdate: function () {
+                setProgress(Math.round(this.targets()[0].val))
+            }
+        }, 0)
+
+        // Animate stars converging to center
+        starsRef.current.forEach((star, i) => {
+            if (!star) return
+            const config = starInitialPositions.current[i]
+            
+            // Ensure stars finish exactly within the 15s TOTAL_DURATION
+            const duration = 1.5 + Math.random() * 3.5
+            const delay = Math.random() * (TOTAL_DURATION - duration)
+
+            tl.fromTo(star, 
+                {
+                    x: `${config.x}vw`,
+                    y: `${config.y}vh`,
+                    opacity: 0,
+                    scale: 0.2
+                },
+                {
+                    x: "0vw",
+                    y: "0vh",
+                    opacity: 1,
+                    scale: 0.8,
+                    duration: duration,
+                    delay: delay,
+                    ease: "power2.in"
+                }, 
+                0
+            )
+
+            // Special meteor trail if applicable
+            if (config.isMeteor) {
+                gsap.to(star, {
+                    filter: "blur(1px) drop-shadow(0 0 8px white)",
+                    repeat: -1,
+                    yoyo: true,
+                    duration: 0.1
+                })
+            }
+        })
+
+        // Central glow pulse
+        tl.to(".central-glow", {
+            scale: 3,
+            opacity: 0.8,
+            duration: TOTAL_DURATION,
+            ease: "power2.inOut"
+        }, 0)
+
+    }, { scope: containerRef, dependencies: [mounted] })
 
     return (
         <AnimatePresence>
             {!isComplete && (
                 <motion.div
+                    ref={containerRef}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="fixed inset-0 z-[99999] bg-[#050505] flex items-center justify-center font-mono text-blue-500 overflow-hidden"
+                    transition={{ duration: 0.4 }}
+                    className="fixed inset-0 z-[99999] bg-[#050505] flex items-center justify-center overflow-hidden"
+                    style={{
+                        background: "radial-gradient(circle at center, #020b1a 0%, #050505 100%)"
+                    }}
                 >
-                    <div className="w-full max-w-2xl px-8 py-10 flex flex-col gap-8">
-                        {/* Command Line */}
-                        <div className="flex items-center gap-3 text-sm md:text-base opacity-90">
-                            <div className="w-3 h-3 rounded-full bg-blue-500/80 shadow-[0_0_8px_rgba(59,130,246,0.6)] animate-pulse" />
-                            <p className="tracking-wider">GIRISH@OPS-KERNEL:~$ BOOT --VERBOSE --SILENT</p>
-                        </div>
+                    {/* Background "Stellar Core" Glow */}
+                    <div className="central-glow absolute w-64 h-64 bg-blue-500/20 rounded-full blur-[100px] opacity-0 pointer-events-none" />
 
-                        {/* Progress Section */}
-                        <div className="flex flex-col gap-3 w-full">
-                            <div className="flex justify-between items-end text-sm md:text-base font-medium tracking-[0.2em] uppercase">
-                                <p>Initializing Core</p>
-                                <p>{progress}%</p>
-                            </div>
-                            {/* Progress bar background */}
-                            <div className="w-full h-[2px] bg-blue-900/40 rounded-full overflow-hidden relative">
-                                {/* Progress bar fill */}
-                                <motion.div 
-                                    className="absolute top-0 left-0 h-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"
-                                    initial={{ width: "0%" }}
-                                    animate={{ width: `${progress}%` }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </div>
-                        </div>
+                    {/* Converging Star Particles */}
+                    <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                        {mounted && starInitialPositions.current.map((star, i) => (
+                            <svg
+                                key={i}
+                                ref={el => { starsRef.current[i] = el }}
+                                width={star.isMeteor ? "30" : "4"}
+                                height="4"
+                                viewBox="0 0 30 4"
+                                className="absolute fill-white"
+                            >
+                                <circle cx={star.isMeteor ? "28" : "2"} cy="2" r={star.size} />
+                                {star.isMeteor && (
+                                    <path d="M0 2 L28 2" stroke="white" strokeWidth="1" strokeOpacity="0.3" />
+                                )}
+                            </svg>
+                        ))}
+                    </div>
 
-                        {/* System Logs */}
-                        <div className="flex flex-col gap-2 text-xs md:text-sm tracking-wide opacity-80 min-h-[160px]">
-                            {logs.map((log, index) => (
+                    {/* Central Loading Bar UI */}
+                    <div className="relative w-full max-w-sm px-10 flex flex-col items-center gap-6 z-10">
+                        {/* Status Label (Optional but helps context) */}
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-xs text-[#666] tracking-[0.4em] uppercase font-light"
+                        >
+                            Syncing with Stars
+                        </motion.p>
+
+                        <div className="w-full flex-col gap-2">
+                            {/* Progress Line */}
+                            <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
                                 <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    className="flex items-start"
-                                >
-                                    <span className="text-blue-500 mr-2 opacity-90">{log.substring(0, 6)}</span>
-                                    <span className="text-blue-400/80">{log.substring(6)}</span>
-                                </motion.div>
-                            ))}
-                            {/* Blinking cursor effect below logs */}
-                            {progress < 100 && (
-                                <motion.div 
-                                    animate={{ opacity: [1, 0, 1] }} 
-                                    transition={{ repeat: Infinity, duration: 0.8 }}
-                                    className="w-2 h-4 bg-blue-500/80 mt-1"
+                                    className="absolute top-0 left-0 h-full bg-white shadow-[0_0_15px_white]"
+                                    style={{ width: `${progress}%` }}
                                 />
-                            )}
+                            </div>
+
+                            <div className="flex justify-between mt-3 text-[10px] text-white/40 tracking-widest font-light">
+                                <span>ACCUMULATING</span>
+                                <span>{progress}%</span>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
