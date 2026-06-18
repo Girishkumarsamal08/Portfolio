@@ -290,22 +290,6 @@ export default function Certifications() {
             </motion.div>
           ))}
         </div>
-
-        {/* Bottom stat strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-12 flex items-center gap-6 flex-wrap"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-[#555] text-sm">{certificates.length} certificates issued</span>
-          </div>
-          <div className="w-px h-4 bg-[#333]" />
-          <span className="text-[#555] text-sm">Deloitte Virtual Experience · Forage &amp; Professional Certifications</span>
-        </motion.div>
       </div>
 
       {/* Modal */}
