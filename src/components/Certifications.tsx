@@ -40,25 +40,46 @@ const certificates = [
     year: "2024",
     skills: ["Cyber Threat Analysis", "Risk Assessment", "Security Strategy"],
   },
+  {
+    id: 4,
+    title: "Certificate of Achievement",
+    issuer: "Certified",
+    category: "Professional Development",
+    file: "/GIRISH_KUMAR_SAMAL.png.pdf",
+    color: "#fbbf24",
+    accent: "rgba(251,191,36,0.15)",
+    border: "rgba(251,191,36,0.3)",
+    year: "2024",
+    skills: ["Professional Development", "Achievement", "Recognition"],
+  },
 ]
 
-// Deloitte logo icon as SVG (simplified wordmark dot)
-function DeloitteIcon({ color }: { color: string }) {
+// Dynamic icon — Deloitte wordmark or generic award ribbon
+function CertIcon({ issuer, color }: { issuer: string; color: string }) {
+  if (issuer === "Deloitte") {
+    return (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5" />
+        <text
+          x="50%"
+          y="55%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize="13"
+          fontWeight="700"
+          fontFamily="serif"
+          fill={color}
+        >
+          D
+        </text>
+      </svg>
+    )
+  }
+  // Generic award / ribbon icon
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <circle cx="20" cy="20" r="19" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5" />
-      <text
-        x="50%"
-        y="55%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="13"
-        fontWeight="700"
-        fontFamily="serif"
-        fill={color}
-      >
-        D
-      </text>
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="6" />
+      <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
     </svg>
   )
 }
@@ -105,7 +126,7 @@ function CertModal({
             }}
           >
             <div className="flex items-center gap-4">
-              <DeloitteIcon color={cert.color} />
+              <CertIcon issuer={cert.issuer} color={cert.color} />
               <div>
                 <p className="text-xs uppercase tracking-widest" style={{ color: cert.color }}>
                   {cert.issuer} · {cert.category}
@@ -233,7 +254,7 @@ export default function Certifications() {
                       border: `1px solid ${cert.border}`,
                     }}
                   >
-                    <DeloitteIcon color={cert.color} />
+                    <CertIcon issuer={cert.issuer} color={cert.color} />
                   </div>
 
                   <span
@@ -318,7 +339,7 @@ export default function Certifications() {
             <span className="text-[#555] text-sm">{certificates.length} certificates issued</span>
           </div>
           <div className="w-px h-4 bg-[#333]" />
-          <span className="text-[#555] text-sm">Deloitte Virtual Experience Programme · Forage</span>
+          <span className="text-[#555] text-sm">Deloitte Virtual Experience · Forage &amp; Professional Certifications</span>
         </motion.div>
       </div>
 
