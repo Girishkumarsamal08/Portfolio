@@ -10,7 +10,6 @@ const navLinks = [
     { label: "About", href: "#about" },
     { label: "Education", href: "#education" },
     { label: "Projects", href: "#projects" },
-    { label: "Certifications", href: "#certifications" },
     { label: "Contact", href: "#contact" },
 ]
 
@@ -25,7 +24,7 @@ export default function Navbar() {
             setScrolled(window.scrollY > 50)
 
             // Scroll spy logic
-            const sections = ["hero", "about", "education", "tools", "projects", "experience", "certifications", "contact"]
+            const sections = ["hero", "about", "education", "tools", "projects", "experience", "contact"]
             const current = sections.find(section => {
                 const element = document.getElementById(section)
                 if (element) {
