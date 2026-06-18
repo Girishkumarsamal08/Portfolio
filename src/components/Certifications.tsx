@@ -210,99 +210,65 @@ export default function Certifications() {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certificates.map((cert, i) => {
-            const isHovered = hoveredCard === cert.id
-
-            return (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.12 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                onHoverStart={() => setHoveredCard(cert.id)}
-                onHoverEnd={() => setHoveredCard(null)}
-                onClick={() => setActiveCert(cert)}
-                className="group relative p-7 rounded-2xl cursor-pointer transition-all duration-500 flex flex-col gap-5"
+          {certificates.map((cert, i) => (
+            <motion.div
+              key={cert.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.12 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -4, scale: 1.01 }}
+              onHoverStart={() => setHoveredCard(cert.id)}
+              onHoverEnd={() => setHoveredCard(null)}
+              onClick={() => setActiveCert(cert)}
+              className="group relative p-8 border border-[#2a2a2a] rounded-2xl bg-black hover:border-[#555] transition-all duration-500 cursor-pointer flex flex-col gap-5 min-h-[280px]"
+            >
+              {/* Subtle inner glow on hover — white only, no colour */}
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                  background: isHovered
-                    ? `linear-gradient(135deg, ${cert.accent}, rgba(0,0,0,0.6))`
-                    : "rgba(10,10,10,0.8)",
-                  border: `1px solid ${isHovered ? cert.border : "#2a2a2a"}`,
-                  boxShadow: isHovered
-                    ? `0 0 30px ${cert.accent}, 0 8px 32px rgba(0,0,0,0.4)`
-                    : "none",
+                  background: "radial-gradient(ellipse at top left, rgba(255,255,255,0.03), transparent 60%)",
                 }}
-              >
-                {/* Top bar accent */}
+              />
+
+              {/* Header row */}
+              <div className="relative z-10 flex items-start justify-between">
                 <div
-                  className="absolute top-0 left-6 right-6 h-[1px] rounded-full transition-all duration-500"
-                  style={{
-                    background: isHovered
-                      ? `linear-gradient(to right, transparent, ${cert.color}, transparent)`
-                      : "transparent",
-                  }}
-                />
-
-                {/* Header row */}
-                <div className="flex items-start justify-between">
-                  <div
-                    className="flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300"
-                    style={{
-                      background: cert.accent,
-                      border: `1px solid ${cert.border}`,
-                    }}
-                  >
-                    <CertIcon issuer={cert.issuer} color={cert.color} />
-                  </div>
-
-                  <span
-                    className="text-xs px-3 py-1 rounded-full font-medium tracking-widest uppercase transition-all duration-300"
-                    style={{
-                      background: cert.accent,
-                      border: `1px solid ${cert.border}`,
-                      color: cert.color,
-                    }}
-                  >
-                    {cert.year}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-col gap-2 flex-1">
-                  <p
-                    className="text-xs uppercase tracking-widest transition-colors duration-300"
-                    style={{ color: cert.color }}
-                  >
-                    {cert.issuer} · {cert.category}
-                  </p>
-                  <h3 className="text-white font-semibold text-lg leading-snug group-hover:text-white/90 transition-colors">
-                    {cert.title}
-                  </h3>
-                </div>
-
-                {/* Skills chips */}
-                <div className="flex flex-wrap gap-2">
-                  {cert.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-xs px-3 py-1 rounded-full border transition-all duration-300"
-                      style={{
-                        borderColor: isHovered ? cert.border : "#2a2a2a",
-                        color: isHovered ? cert.color : "#777",
-                      }}
-                    >
-                      · {skill}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA row */}
-                <div
-                  className="flex items-center gap-2 text-sm font-medium transition-all duration-300 mt-1"
-                  style={{ color: isHovered ? cert.color : "#555" }}
+                  className="flex items-center justify-center w-12 h-12 rounded-xl"
+                  style={{ background: "#111", border: "1px solid #2a2a2a" }}
                 >
+                  <CertIcon issuer={cert.issuer} color="#888" />
+                </div>
+
+                <span className="text-xs px-3 py-1 border border-[#333] group-hover:border-[#555] text-[#888] uppercase tracking-widest transition-colors duration-300">
+                  {cert.year}
+                </span>
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 flex flex-col gap-2 flex-1">
+                <p className="text-xs uppercase tracking-widest text-[#555]">
+                  {cert.issuer} · {cert.category}
+                </p>
+                <h3 className="text-white font-semibold text-lg leading-snug group-hover:text-white/90 transition-colors">
+                  {cert.title}
+                </h3>
+              </div>
+
+              {/* Skills chips */}
+              <div className="relative z-10 flex flex-wrap gap-2">
+                {cert.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-xs px-3 py-1 border border-[#333] group-hover:border-[#444] text-[#aaa] rounded-full transition-colors duration-300"
+                  >
+                    · {skill}
+                  </span>
+                ))}
+              </div>
+
+              {/* CTA row */}
+              <div className="relative z-10 flex items-center gap-2 text-sm font-medium text-[#555] group-hover:text-[#888] transition-all duration-300 mt-1">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                     <circle cx="12" cy="12" r="3" />
@@ -321,9 +287,8 @@ export default function Certifications() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </div>
-              </motion.div>
-            )
-          })}
+            </motion.div>
+          ))}
         </div>
 
         {/* Bottom stat strip */}
